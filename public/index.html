@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Gensokyo Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="max-age=31536000, immutable">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="/css/leaflet-sidebar.css" />
+  <style>
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: url('/images/Screenshot_20250224_215446.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="sidebar" class="sidebar collapsed">
+    <div class="sidebar-tabs">
+      <ul role="tablist">
+        <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
+        <li><a href="#search" role="tab"><i class="fa fa-search"></i></a></li>
+        <!-- <li><a href="#settings" role="tab"><i class="fa fa-gear"></i></a></li> -->
+        <li><a href="#forest-of-magic" role="tab"><i class="fa fa-user"></i></a></li>
+        <li><a href="#human-village" role=" tab"><i class="fa fa-user"></i></a></li>
+        <li><a href="#yokai-mountain" role="tab"><i class="fa fa-user"></i></a></li>
+        <li><a href="#bamboo-forest-of-the-lost" role="tab"><i class="fa fa-user"></i></a></li>
+        <li><a href="#muenzuka" role="tab"><i class="fa fa-user"></i></a></li>
+        <li><a href="#sanzu-river" role="tab"><i class="fa fa-user"></i></a></li>
+        <li><a href="#higan" role="tab"><i class="fa fa-user"></i></a></li>
+        <li><a href="#makai" role="tab"><i class="fa fa-user"></i></a></li>
+        <li><a href="#underground" role="tab"><i class="fa fa-user"></i></a></li>
+        <li><a href="#the-moon" role="tab"><i class="fa fa-user"></i></a></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-content">
+
+      <div class="sidebar-pane" id="home">
+        <h1 class="sidebar-header">sidebar-v2<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+        <p>A basic Touhou Leaflet map</p>
+      </div>
+
+      <div class="sidebar-pane" id="human-village">
+        <iframe class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Human_Village&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+
+      <div class="sidebar-pane" id="forest-of-magic">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Forest_of_Magic&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="bamboo-forest-of-the-lost">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Bamboo_Forest_of_the_Lost&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="underground">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Underworld&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="underground">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Underworld&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="muenzuka">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Muenzuka&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="the-moon">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Moon&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="sanzu-river">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Sanzu_River&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="higan">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Higan&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="great-yokai-forest">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Youkai_Mountain?mobileaction=toggle_view_mobile#The_Great_Youkai_Forest"></iframe>
+      </div>
+      <div class="sidebar-pane" id="yokai-mountain">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Youkai_Mountain&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="makai">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Makai&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="scarlet-devil-mansion">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Scarlet_Devil_Mansion&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="hell-of-blood-pools">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Old_Hell?mobileaction=toggle_view_mobile#Games"></iframe>
+      </div>
+      <div class="sidebar-pane" id="nuclear-furnace">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Nuclear_Furnace&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="remains-of-blazing-hell">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Remains_of_Blazing_Hell&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="old-hell-capital">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Old_Capital&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="fantasy-world">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Fantasy_World&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="reimaden">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Reimaden&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="world-of-fantasies">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=World_of_Fantasies&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="mugenkan">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Mugenkan&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="heaven">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Heaven&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="shining-needle-castle">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Shining_Needle_Castle&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="dream-world">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Dream_World&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="fantastic-blowhole">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Fantastic_Blowhole&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="ruins-of-vina">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Makai?mobileaction=toggle_view_mobile#Geography"></iframe>
+      </div>
+
+      <div class="sidebar-pane" id="fallen-temple">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Makai?mobileaction=toggle_view_mobile#Geography"></iframe>
+      </div>
+      <div class="sidebar-pane" id="makai-city">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Makai?mobileaction=toggle_view_mobile#Geography"></iframe>
+      </div>
+      <div class="sidebar-pane" id="world-of-ice-and-snow">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Makai?mobileaction=toggle_view_mobile#Geography"></iframe>
+      </div>
+      <div class="sidebar-pane" id="hokkai">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Makai?mobileaction=toggle_view_mobile#Geography"></iframe>
+      </div>
+      <div class="sidebar-pane" id="pandæmonium">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Makai?mobileaction=toggle_view_mobile#Geography"></iframe>
+      </div>
+      <div class="sidebar-pane" id="wonderland">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Makai?mobileaction=toggle_view_mobile#Geography"></iframe>
+      </div>
+      <div class="sidebar-pane" id="deep-road-to-hell">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Deep_Road_to_Hell&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="palace-of-earth-spirits">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Palace_of_the_Earth_Spirits&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="rainbow-cavern-of-earth-spirits">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Rainbow_Cavern_of_Earth_Spirits&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="hot-spring-town">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Hot_Spring_Town&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="hill-of-the-nameless">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Hill_of_the_Nameless&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="garden-of-the-sun">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Garden_of_the_Sun&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="probability-space-hypervessel">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Probability_Space_Hypervessel&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="lake-of-blood">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Lake_of_Blood&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="world-of-fantasies">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=World_of_Fantasies&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="faries-of-light-house">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Three_Fairies_of_Light&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="hakurei-shrine">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Hakurei_Shrine&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="genji-pond">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Genjii&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="geyser-field">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Underground_Geyser_Center&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="fantastic-blowhole">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Fantastic_Blowhole&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="yokai-trail">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Youkai_Trail&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="abandon-pond">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Abandon_Pond&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="korindo">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Kourindou&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="marisa-house">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Forest_of_Magic?mobileaction=toggle_view_mobile#Marisa's_House"></iframe>
+      </div>
+
+      <div class="sidebar-pane" id="alice-house">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Forest_of_Magic?mobileaction=toggle_view_mobile#Alice's_House"></iframe>
+      </div>
+      <div class="sidebar-pane" id="radio-tower">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Forest_of_Magic&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="road-of-lingering-snow">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Road_of_Lingering_Snow&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="mayohiga">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Mayohiga&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="yukari-mansion">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Yukari_Yakumo&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="road-of-reconsideration">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Road_of_Reconsideration&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="phantom-meadow">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Phantom_Meadow&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="genbu-ravine">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Genbu_Ravine&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="kasen-mansion">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Kasen_Ibaraki&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="road-of-liminality">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Road_of_Liminality&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="sai-no-kawara">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Sanzu_River?mobileaction=toggle_view_mobile#Sai_no_Kawara"></iframe>
+      </div>
+      <div class="sidebar-pane" id="barrier-of-life-and-death">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Barrier_of_Life_%26_Death&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="netherworld">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Netherworld&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="saigyo-ayakashi">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Saigyou_Ayakashi&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="hakugyokuro">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Hakugyokurou&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="hell">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Hell&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="hokora">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Hell?mobileaction=toggle_view_mobile#PC-98_games"></iframe>
+      </div>
+      <div class="sidebar-pane" id="rotting-world-of-flame">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Hell&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="silent-temple">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Hell?mobileaction=toggle_view_mobile#PC-98_games"></iframe>
+      </div>
+      <div class="sidebar-pane" id="animal-realm">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Animal_Realm&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="primate-spirit-garden">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Primate_Spirit_Garden&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="false-heaven-shelf">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=False_Heaven_Shelf&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="komakusa-gambling-den">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Komakusa_Gambling_Den&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="underground-geyser-center">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Underground_Geyser_Center&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="wind-god-lake">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Wind_God's_Lake&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+
+      <div class="sidebar-pane" id="secret-heaven-cliff">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=False_Heaven_Shelf&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="waterfall-of-nine-heavens">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Waterfall_of_Nine_Heavens&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="moriya-shrine">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Moriya_Shrine&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="giant-toad-pond">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Giant_Toad's_Pond&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="shining-needle-castle">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Shining_Needle_Castle&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="ruined-western-mansion">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Ruined_Western_Mansion&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="peony-field">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Youkai_Mountain?mobileaction=toggle_view_mobile#Peony_Field"></iframe>
+      </div>
+      <div class="sidebar-pane" id="untrodden-valley">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/wiki/Youkai_Mountain?mobileaction=toggle_view_mobile#The_Untrodden_Valley"></iframe>
+      </div>
+      <div class="sidebar-pane" id="rainbow-cavern-of-earth-spirits">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Rainbow_Cavern_of_Earth_Spirits&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="spring-path">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Spring_Path&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="mist-lake">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Misty_Lake&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="tanuki-forest">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Youkai_Tanuki_Forest&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="cirno-house">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Cirno&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+
+      <div class="sidebar-pane" id="myoren-temple">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=Myouren_Temple&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+      <div class="sidebar-pane" id="canal-of-wilows">
+        <iframe id="problem-iframe" class="iframe"
+          src="https://en.touhouwiki.net/index.php?title=&nocache=&mobileaction=toggle_view_mobile"></iframe>
+      </div>
+
+      <div class="sidebar-pane" id="settings">
+        <h1 class="sidebar-header">Settings<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+      </div>
+
+      <div class="sidebar-pane" id="search">
+        <h1 class="sidebar-header">Search<span class="sidebar-close"><i class="fa fa-caret-left"></i></span></h1>
+        <input type="text" id="myInput" onkeyup="Search()" placeholder="Search place names...">
+        <ul id="myUL">
+          <li><a href="#" onclick="onMarkerClick(markerMap['human-village'], 'human-village')(event)">Human Village</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['forest-of-magic'], 'forest-of-magic')(event)">Forest of
+              Magic</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['makai'], 'makai')(event)">Makai</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['muenzuka'], 'muenzuka')(event)">Muenzuka</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['sanzu-river'], 'sanzu-river')(event)">Sanzu River</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['yokai-mountain'], 'yokai-mountain')(event)">Yokai
+              Mountain</a></li>
+
+          <li><a href="#" onclick="onMarkerClick(markerMap['the-moon'], 'the-moon'')(event)">The Moon</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['underground'], 'underground')(event)">Underground</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['higan'], 'higan')(event)">Higan</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['bamboo-forest-of-the-lost'], 'bamboo-forest-of-the-lost')(event)">Bamboo
+              Forest of The Lost</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['scarlet-devil-mansion'], 'scarlet-devil-mansion')(event)">Scarlet Devil
+              Mansion</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['hell-of-blood-pools'], 'hell-of-blood-pools')(event)">Hell
+              of Blood Pools</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['nuclear-furnace'], 'nuclear-furnace')(event)">Nuclear
+              Furnace</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['remains-of-blazing-hell'], 'remains-of-blazing-hell')(event)">Remains of
+              Blazing Hell</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['old-hell-capital'], 'old-hell-capital')(event)">Old Hell
+              Capital</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['fantasy-world'], 'fantasy-world')(event)">Fantasy World</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['reimaden'], 'reimaden')(event)">Reimaden</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['world-of-fantasies'], 'world-of-fantasies')(event)">World of
+              Fantasies</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['mugenkan'], 'mugenkan')(event)">Mugenkan</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['heaven'], 'heaven')(event)">Heaven</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['shining-needle-castle'], 'shining-needle-castle')(event)">Shining Needle
+              Castle</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['dream-world'], 'dream-world')(event)">Dream World</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['fantastic-blowhole'], 'fantastic-blowhole')(event)">Fantastic
+              Blowhole</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['ruins-of-vina'], 'ruins-of-vina')(event)">Ruins of Vina</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['fallen-temple'], 'fallen-temple')(event)">Fallen Temple</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['makai-city'], 'makai-city')(event)">Makai City</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['world-of-ice-and-snow'], 'world-of-ice-and-snow')(event)">World of Ice
+              and Snow</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['hokkai'], 'hokkai')(event)">Hokkai</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['pandæmonium'], 'pandæmonium')(event)">Pandæmonium</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['wonderland'], 'wonderland')(event)">Wonderland</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['deep-road-to-hell'], 'deep-road-to-hell')(event)">Deep Road
+              to Hell</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['palace-of-earth-spirits'], 'palace-of-earth-spirits')(event)">Palace of
+              Earth Spirits</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['rainbow-cavern-of-earth-spirits'], 'rainbow-cavern-of-earth-spirits')(event)">Rainbow
+              Cavern of Earth Spirits</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['hot-spring-town'], 'hot-spring-town')(event)">Hot Spring
+              Town</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['hill-of-the-nameless'], 'hill-of-the-nameless')(event)">Hill
+              of the Nameless</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['garden-of-the-sun'], 'garden-of-the-sun')(event)">Garden of
+              the Sun</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['probability-space-hypervessel'], 'probability-space-hypervessel')(event)">Probability
+              Space Hypervessel</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['lake-of-blood'], 'lake-of-blood')(event)">Lake of Blood</a>
+          </li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['faries-of-light-house'], 'faries-of-light-house')(event)">Fairies of
+              Light House</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['hakurei-shrine'], 'hakurei-shrine')(event)">Hakurei
+              Shrine</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['genji-pond'], 'genji-pond')(event)">Genji Pond</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['geyser-field'], 'geyser-field')(event)">Geyser Field</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['yokai-trail'], 'yokai-trail')(event)">Yokai Trail</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['korindo'], 'korindo')(event)">Korindo</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['marisa-house'], 'marisa-house')(event)">Marisa House</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['alice-house'], 'alice-house')(event)">Alice House</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['radio-tower'], 'radio-tower')(event)">Radio Tower</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['road-of-lingering-snow'], 'road-of-lingering-snow')(event)">Road of
+              Lingering Snow</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['mayohiga'], 'mayohiga')(event)">Mayohiga</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['yukari-mansion'], 'yukari-mansion')(event)">Yukari
+              Mansion</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['road-of-reconsideration'], 'road-of-reconsideration')(event)">Road of
+              Reconsideration</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['phantom-meadow'], 'phantom-meadow')(event)">Phantom
+              Meadow</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['genbu-ravine'], 'genbu-ravine')(event)">Genbu Ravine</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['kasen-mansion'], 'kasen-mansion')(event)">Kasen Mansion</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['road-of-liminality'], 'road-of-liminality')(event)">Road of
+              Liminality</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['sai-no-kawara'], 'sai-no-kawara')(event)">Sai no Kawara</a>
+          </li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['barrier-of-life-and-death'], 'barrier-of-life-and-death')(event)">Barrier
+              of Life and Death</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['netherworld'], 'netherworld')(event)">Netherworld</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['saigyo-ayakashi'], 'saigyo-ayakashi')(event)">Saigyo
+              Ayakashi</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['hakugyokuro'], 'hakugyokuro')(event)">Hakugyokuro</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['hell'], 'hell')(event)">Hell</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['hokora'], 'hokora')(event)">Hokora</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['rotting-world-of-flame'], 'rotting-world-of-flame')(event)">Rotting
+              World of Flame</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['silent-temple'], 'silent-temple')(event)">Silent Temple</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['animal-realm'], 'animal-realm')(event)">Animal Realm</a>
+          </li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['primate-spirit-garden'], 'primate-spirit-garden')(event)">Primate Spirit
+              Garden</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['false-heaven-shelf'], 'false-heaven-shelf')(event)">False
+              Heaven Shelf</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['komakusa-gambling-den'], 'komakusa-gambling-den')(event)">Komakusa
+              Gambling Den</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['underground-geyser-center'], 'underground-geyser-center')(event)">Underground
+              Geyser Center</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['wind-god-lake'], 'wind-god-lake')(event)">Wind God Lake</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['secret-heaven-cliff'], 'secret-heaven-cliff')(event)">Secret
+              Heaven Cliff</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['waterfall-of-nine-heavens'], 'waterfall-of-nine-heavens')(event)">Waterfall
+              of Nine Heavens</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['moriya-shrine'], 'moriya-shrine')(event)">Moriya Shrine</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['giant-toad-pond'], 'giant-toad-pond')(event)">Giant Toad
+              Pond</a></li>
+          <li><a href="#"
+              onclick="onMarkerClick(markerMap['ruined-western-mansion'], 'ruined-western-mansion')(event)">Ruined
+              Western Mansion</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['peony-field'], 'peony-field')(event)">Peony Field</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['untrodden-valley'], 'untrodden-valley')(event)">Untrodden
+              Valley</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['spring-path'], 'spring-path')(event)">Spring Path</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['mist-lake'], 'mist-lake')(event)">Mist Lake</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['tanuki-forest'], 'tanuki-forest')(event)">Tanuki Forest</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['cirno-house'], 'cirno-house')(event)">Cirno House</a></li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['myoren-temple'], 'myoren-temple')(event)">Myoren Temple</a>
+          </li>
+          <li><a href="#" onclick="onMarkerClick(markerMap['canal-of-wilows'], 'canal-of-wilows')(event)">Canal of
+              Willows</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="map" class="sidebar-map"></div>
+  <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+  <script src="/js/leaflet-sidebar.js"></script>
+  <script>
+
+    // Map Initialization
+    var map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: -2,
+      maxZoom: 5,
+      zoomSnap: 0.1,
+      wheelPxPerZoomLevel: 300,
+      maxBounds: [[-5500, -5500], [5500, 5500]],
+      maxBoundViscosity: 0.1
+    });
+    L.imageOverlay('/images/t118a4520yna1.jpg', [[0, 0], [3413, 4096]]).addTo(map);
+    map.setView([1700, 500], -2);
+
+    // Sidebar Setup
+    var sidebar = L.control.sidebar('sidebar').addTo(map);
+    sidebar.open("home");
+    var markerMap = {};
+
+    // Marker Setup
+    var markerIcon = L.icon({
+      iconUrl: '/images/marker-icon.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 36],
+      popupAnchor: [0, -36]
+    });
+
+    var markerIconminor = L.icon({
+      iconUrl: '/images/marker-icon.png',
+      iconSize: [18.75, 30.75],
+      iconAnchor: [12, 36],
+      popupAnchor: [0, -36]
+    });
+
+    var markerIconClicked = L.icon({
+      iconUrl: '/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 36],
+      popupAnchor: [0, -36]
+    });
+
+    let activeMarker = null; // Track the currently clicked marker
+
+    var locations = [
+      {coords: [1361, 1867], pane: 'human-village'},
+      {coords: [1790, 2312], pane: 'forest-of-magic'},
+      {coords: [969, 1977], pane: 'bamboo-forest-of-the-lost'},
+      {coords: [1451, 3134], pane: 'underground'},
+      {coords: [786, 214], pane: 'underground'},
+      {coords: [2863, 2456], pane: 'muenzuka'},
+      {coords: [3163, 3492], pane: 'the-moon'},
+      {coords: [2976, 1353], pane: 'sanzu-river'},
+      {coords: [3163, 1037], pane: 'higan'},
+      {coords: [2153, 1105], pane: 'great-yokai-forest'},
+      {coords: [2765, 1553], pane: 'yokai-mountain'},
+      {coords: [802, 1005], pane: 'makai'}
+    ];
+
+    var locationsMinor = [
+      {coords: [1752, 1851], pane: 'scarlet-devil-mansion'},
+      {coords: [381, 3633], pane: 'hell-of-blood-pools'},
+      {coords: [651, 3035], pane: 'nuclear-furnace'},
+      {coords: [704, 3544], pane: 'remains-of-blazing-hell'},
+      {coords: [902, 3115], pane: 'old-hell-capital'},
+      {coords: [297, 416], pane: 'old-hell-capital'},
+      {coords: [1096, 3905], pane: 'fantasy-world'},
+      {coords: [1239, 3610], pane: 'reimaden'},
+      {coords: [693, 1529], pane: 'reimaden'},
+      {coords: [1481, 3669], pane: 'world-of-fantasies'},
+      {coords: [1386, 3937], pane: 'mugenkan'},
+      {coords: [2265, 3654], pane: 'heaven'},
+      {coords: [2032, 3021], pane: 'shining-needle-castle'},
+      {coords: [2467, 3504], pane: 'dream-world'},
+      {coords: [309, 712], pane: 'fantastic-blowhole'},
+      {coords: [559, 1388], pane: 'ruins-of-vina'},
+      {coords: [562, 1151], pane: 'fallen-temple'},
+      {coords: [334, 1057], pane: 'makai-city'},
+      {coords: [256, 1354], pane: 'world-of-ice-and-snow'},
+      {coords: [120, 1034], pane: 'hokkai'},
+      {coords: [70, 1432], pane: 'pandæmonium'},
+      {coords: [388, 1588], pane: 'wonderland'},
+      {coords: [100, 553], pane: 'deep-road-to-hell'},
+      {coords: [511, 242], pane: 'palace-of-earth-spirits'},
+      {coords: [750, 559], pane: 'rainbow-cavern-of-earth-spirits'},
+      {coords: [519, 656], pane: 'hot-spring-town'},
+      {coords: [310, 1965], pane: 'hill-of-the-nameless'},
+      {coords: [606, 2062], pane: 'garden-of-the-sun'},
+      {coords: [1004, 2389], pane: 'probability-space-hypervessel'},
+      {coords: [1320, 2722], pane: 'lake-of-blood'},
+      {coords: [1384, 2511], pane: 'world-of-fantasies'},
+      {coords: [1479, 2515], pane: 'faries-of-light-house'},
+      {coords: [1485, 2368], pane: 'hakurei-shrine'},
+      {coords: [1528, 2419], pane: 'genji-pond'},
+      {coords: [1611, 2459], pane: 'geyser-field'},
+      {coords: [1682, 2460], pane: 'fantastic-blowhole'},
+      {coords: [1495, 2197], pane: 'yokai-trail'},
+      {coords: [1524, 2032], pane: 'abandon-pond'},
+      {coords: [1566, 2126], pane: 'korindo'},
+      {coords: [1664, 2189], pane: 'marisa-house'},
+      {coords: [1835, 2189], pane: 'alice-house'},
+      {coords: [1926, 2340], pane: 'radio-tower'},
+      {coords: [2071, 2356], pane: 'road-of-lingering-snow'},
+      {coords: [2156, 2559], pane: 'mayohiga'},
+      {coords: [2402, 2712], pane: 'yukari-mansion'},
+      {coords: [2424, 2364], pane: 'road-of-reconsideration'},
+      {coords: [2206, 2107], pane: 'phantom-meadow'},
+      {coords: [1999, 1996], pane: 'genbu-ravine'},
+      {coords: [2720, 2020], pane: 'kasen-mansion'},
+      {coords: [3077, 2241], pane: 'road-of-liminality'},
+      {coords: [3025, 2055], pane: 'sai-no-kawara'},
+      {coords: [3093, 1924], pane: 'barrier-of-life-and-death'},
+      {coords: [3153, 2039], pane: 'netherworld'},
+      {coords: [3264, 2090], pane: 'saigyo-ayakashi'},
+      {coords: [3200, 1912], pane: 'hakugyokuro'},
+      {coords: [3112, 1710], pane: 'hell'},
+      {coords: [3103, 1567], pane: 'hokora'},
+      {coords: [3210, 1509], pane: 'rotting-world-of-flame'},
+      {coords: [3271, 1681], pane: 'silent-temple'},
+      {coords: [3108, 1266], pane: 'animal-realm'},
+      {coords: [3267, 1247], pane: 'primate-spirit-garden'},
+      {coords: [2575, 1437], pane: 'false-heaven-shelf'},
+      {coords: [2493, 1443], pane: 'komakusa-gambling-den'},
+      {coords: [2473, 1670], pane: 'underground-geyser-center'},
+      {coords: [2384, 1503], pane: 'wind-god-lake'},
+      {coords: [2352, 1346], pane: 'secret-heaven-cliff'},
+      {coords: [2304, 1625], pane: 'waterfall-of-nine-heavens'},
+      {coords: [2218, 1419], pane: 'moriya-shrine'},
+      {coords: [2278, 1957], pane: 'giant-toad-pond'},
+      {coords: [2343, 893], pane: 'shining-needle-castle'},
+      {coords: [1976, 1079], pane: 'ruined-western-mansion'},
+      {coords: [1933, 1471], pane: 'peony-field'},
+      {coords: [1991, 1785], pane: 'untrodden-valley'},
+      {coords: [1894, 1944], pane: 'rainbow-cavern-of-earth-spirits'},
+      {coords: [1719, 1987], pane: 'spring-path'},
+      {coords: [1668, 1870], pane: 'mist-lake'},
+      {coords: [1627, 1689], pane: 'tanuki-forest'},
+      {coords: [1632, 1939], pane: 'cirno-house'},
+      {coords: [1238, 1628], pane: 'myoren-temple'},
+      {coords: [1166, 1738], pane: 'canal-of-wilows'},
+    ];
+
+    locations.forEach(loc => {
+      var marker = L.marker(loc.coords, {icon: markerIcon}).addTo(map);
+      markerMap[loc.pane] = marker;
+      marker.markerType = 'major';
+      marker.on('click', onMarkerClick(marker, loc.pane));
+    });
+
+    locationsMinor.forEach(loc => {
+      var marker = L.marker(loc.coords, {icon: markerIconminor}).addTo(map);
+      marker.markerType = 'minor';
+      markerMap[loc.pane] = marker;
+      marker.on('click', onMarkerClick(marker, loc.pane));
+    });
+
+
+    function onMarkerClick(marker, paneId) {
+      return function (e) {
+        // If there's an active marker, reset its icon
+        if (activeMarker) {
+          if (activeMarker.markerType === 'major') {
+            activeMarker.setIcon(markerIcon);
+          } else {
+            activeMarker.setIcon(markerIconminor);
+          }
+        }
+        // Set the new active marker
+        activeMarker = marker;
+        marker.setIcon(markerIconClicked);
+        // Open sidebar and update iframe
+
+        var pane = document.getElementById(paneId);
+        if (pane) {
+          var iframe = pane.querySelector('.iframe');
+          if (iframe) {
+            iframe.src = iframe.src; // Refresh iframe
+          }
+        }
+        sidebar.open(paneId);
+        // Adjust map view with custom offset
+        const target = map.latLngToContainerPoint(e.latlng);
+        const offset = L.point(target.x + -200, target.y + 0); // Adjust the x value to shift the center
+        const newCenter = map.containerPointToLatLng(offset);
+        map.setView(newCenter, -0.30);
+      };
+    }
+
+
+
+
+    // Reset marker when clicking the map
+    map.on('click', function (e) {
+      if (activeMarker) {
+        if (activeMarker.markerType === 'major') {
+          activeMarker.setIcon(markerIcon);
+        } else {
+          activeMarker.setIcon(markerIconminor);
+        }
+        activeMarker = null;
+      }
+      sidebar.close();
+    });
+
+    map.on('click', function (e) {
+      const x = e.latlng.lng;
+      const y = e.latlng.lat;
+      console.log(`Clicked at map position: X=${x}, Y=${y}`);
+    });
+
+
+    document.addEventListener('click', function (event) {
+    });
+    // Sidebar Resizing
+    document.addEventListener('DOMContentLoaded', function () {
+      const sidebarElement = document.querySelector('.sidebar');
+      const handle = document.createElement('div');
+      handle.classList.add('resize-handle');
+      sidebarElement.appendChild(handle);
+      let startX, startWidth;
+      handle.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        startX = e.clientX;
+        startWidth = sidebarElement.offsetWidth;
+        function resize(e) {
+          let newWidth = startWidth + (e.clientX - startX);
+          sidebarElement.style.width = `${Math.max(300, Math.min(newWidth, window.innerWidth * 0.7))}px`;
+        }
+        function stopResize() {
+          window.removeEventListener('mousemove', resize);
+          window.removeEventListener('mouseup', stopResize);
+        }
+        window.addEventListener('mousemove', resize);
+        window.addEventListener('mouseup', stopResize);
+      });
+    });
+
+    function debounce(func, wait) {
+      let timeout;
+      return function () {
+        const context = this, args = arguments;
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(context, args), wait);
+      };
+    }
+
+    // Enhanced Search Functionality
+    function Search() {
+      var input, filter, ul, li, a, i, txtValue;
+      input = document.getElementById('myInput');
+      filter = input.value.toUpperCase();
+      ul = document.getElementById("myUL");
+      li = ul.getElementsByTagName('li');
+      let hasResults = false;
+      for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.textContent || a.innerText;
+        if (txtValue.toUpperCase().includes(filter)) {
+          li[i].style.display = "";
+          hasResults = true;
+        } else {
+          li[i].style.display = "none";
+        }
+      }
+      // Add "No Results" Feedback
+      const noResults = document.getElementById('noResults');
+      if (!hasResults) {
+        noResults.style.display = "block";
+      } else {
+        noResults.style.display = "none";
+      }
+    }
+
+    document.getElementById('myInput').addEventListener('keyup', debounce(Search, 300));
+
+    window.onload = function () {
+      const iframes = document.querySelectorAll('iframe');
+      iframes.forEach((iframe) => {
+        if (!iframe.hasAttribute('loading')) {
+          iframe.setAttribute('loading', 'lazy');
+          console.log(`Added loading="lazy" to iframe with src: ${iframe.src}`);
+        }
+      });
+    };
+  </script>
+</body>
+
+</html>
