@@ -1,4 +1,4 @@
-# A Gensokyo Leaflet map with multiple issues.
+# A Gensokyo Leaflet map, NO LONGER WORKS AS IFRAMES DO NOT LOAD ANYMORE
 
 https://domgoz.github.io/Gensokyo-Leaflet-Map/
 
